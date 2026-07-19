@@ -1,0 +1,337 @@
+eventflow/
+│
+├── public/
+│ ├── images/
+│ ├── icons/
+│ └── logo.svg
+│
+├── src/
+│
+│ ├── app/
+│ │
+│ │ ├── layout.tsx
+│ │ ├── page.tsx
+│ │ ├── error.tsx
+│ │ ├── not-found.tsx
+│ │ ├── loading.tsx
+│ │ ├── globals.css
+│ │
+│ │ ├── (public)/
+│ │ │ ├── page.tsx
+│ │ │ ├── events/
+│ │ │ │ ├── page.tsx
+│ │ │ │ └── [id]/
+│ │ │ │ └── page.tsx
+│ │ │ ├── about/
+│ │ │ │ └── page.tsx
+│ │ │ └── contact/
+│ │ │ └── page.tsx
+│ │
+│ │ ├── (auth)/
+│ │ │ ├── login/
+│ │ │ │ └── page.tsx
+│ │ │ ├── register/
+│ │ │ │ └── page.tsx
+│ │ │ ├── forgot-password/
+│ │ │ │ └── page.tsx
+│ │ │ └── reset-password/
+│ │ │ └── page.tsx
+│ │
+│ │ ├── attendee/
+│ │ │ ├── layout.tsx
+│ │ │ ├── page.tsx
+│ │ │ ├── events/
+│ │ │ │ └── page.tsx
+│ │ │ ├── notifications/
+│ │ │ │ └── page.tsx
+│ │ │ └── profile/
+│ │ │ └── page.tsx
+│ │
+│ │ ├── organizer/
+│ │ │ ├── layout.tsx
+│ │ │ ├── page.tsx
+│ │ │ ├── events/
+│ │ │ │ ├── page.tsx
+│ │ │ │ ├── new/
+│ │ │ │ │ └── page.tsx
+│ │ │ │ └── [id]/
+│ │ │ │ ├── page.tsx
+│ │ │ │ ├── edit/
+│ │ │ │ │ └── page.tsx
+│ │ │ │ └── attendees/
+│ │ │ │ └── page.tsx
+│ │ │ ├── analytics/
+│ │ │ │ └── page.tsx
+│ │ │ └── settings/
+│ │ │ └── page.tsx
+│ │
+│ │ ├── admin/
+│ │ │ ├── layout.tsx
+│ │ │ ├── page.tsx
+│ │ │ ├── users/
+│ │ │ │ └── page.tsx
+│ │ │ ├── events/
+│ │ │ │ └── page.tsx
+│ │ │ ├── analytics/
+│ │ │ │ └── page.tsx
+│ │ │ └── applications/
+│ │ │ └── page.tsx
+│ │
+│ │ └── api/
+│ │ ├── webhooks/
+│ │ │ └── route.ts
+│ │ ├── export/
+│ │ │ └── attendees/
+│ │ │ └── route.ts
+│ │ └── notifications/
+│ │ └── route.ts
+│
+│
+│ ├── components/
+│ │
+│ │ ├── ui/
+│ │ │ ├── button.tsx
+│ │ │ ├── input.tsx
+│ │ │ ├── dialog.tsx
+│ │ │ ├── table.tsx
+│ │ │ ├── badge.tsx
+│ │ │ ├── avatar.tsx
+│ │ │ ├── select.tsx
+│ │ │ ├── dropdown.tsx
+│ │ │ └── toast.tsx
+│ │ │
+│ │ ├── layouts/
+│ │ │ ├── dashboard-shell.tsx
+│ │ │ ├── dashboard-sidebar.tsx
+│ │ │ ├── dashboard-header.tsx
+│ │ │ └── public-layout.tsx
+│ │ │
+│ │ ├── events/
+│ │ │ ├── event-card.tsx
+│ │ │ ├── event-list.tsx
+│ │ │ ├── event-form.tsx
+│ │ │ ├── event-filters.tsx
+│ │ │ └── event-details.tsx
+│ │ │
+│ │ ├── charts/
+│ │ │ ├── line-chart.tsx
+│ │ │ ├── bar-chart.tsx
+│ │ │ └── pie-chart.tsx
+│ │ │
+│ │ ├── tables/
+│ │ │ ├── users-table.tsx
+│ │ │ ├── events-table.tsx
+│ │ │ └── attendees-table.tsx
+│ │ │
+│ │ └── shared/
+│ │ ├── loading-spinner.tsx
+│ │ ├── empty-state.tsx
+│ │ ├── error-state.tsx
+│ │ └── pagination.tsx
+│
+│
+│ ├── features/
+│ │
+│ │ ├── auth/
+│ │ │ ├── actions/
+│ │ │ │ ├── login.ts
+│ │ │ │ ├── register.ts
+│ │ │ │ └── logout.ts
+│ │ │ ├── hooks/
+│ │ │ ├── schemas/
+│ │ │ └── utils.ts
+│ │
+│ │ ├── events/
+│ │ │ ├── actions/
+│ │ │ │ ├── create-event.ts
+│ │ │ │ ├── update-event.ts
+│ │ │ │ ├── delete-event.ts
+│ │ │ │ └── register-event.ts
+│ │ │ ├── queries/
+│ │ │ │ ├── get-events.ts
+│ │ │ │ ├── get-event-by-id.ts
+│ │ │ │ └── get-featured-events.ts
+│ │ │ ├── schemas/
+│ │ │ │ └── event.schema.ts
+│ │ │ ├── types.ts
+│ │ │ └── utils.ts
+│ │
+│ │ ├── registrations/
+│ │ │ ├── actions/
+│ │ │ ├── queries/
+│ │ │ └── types.ts
+│ │
+│ │ ├── users/
+│ │ │ ├── actions/
+│ │ │ ├── queries/
+│ │ │ ├── schemas/
+│ │ │ └── types.ts
+│ │
+│ │ ├── notifications/
+│ │ │ ├── actions/
+│ │ │ ├── queries/
+│ │ │ └── types.ts
+│ │
+│ │ └── analytics/
+│ │ ├── queries/
+│ │ └── utils.ts
+│
+│
+│ ├── lib/
+│ │ ├── supabase/
+│ │ │ ├── client.ts
+│ │ │ ├── server.ts
+│ │ │ ├── middleware.ts
+│ │ │ └── admin.ts
+│ │ │
+│ │ ├── auth/
+│ │ │ ├── get-user.ts
+│ │ │ ├── get-role.ts
+│ │ │ └── require-role.ts
+│ │ │
+│ │ ├── utils/
+│ │ │ ├── format-date.ts
+│ │ │ ├── format-currency.ts
+│ │ │ ├── debounce.ts
+│ │ │ └── cn.ts
+│ │ │
+│ │ ├── validations/
+│ │ │ └── common.ts
+│ │ │
+│ │ └── constants/
+│ │ ├── roles.ts
+│ │ └── routes.ts
+│
+│
+│ ├── hooks/
+│ │ ├── use-user.ts
+│ │ ├── use-events.ts
+│ │ └── use-debounce.ts
+│
+│
+│ ├── types/
+│ │ ├── database.ts
+│ │ ├── event.ts
+│ │ ├── user.ts
+│ │ └── global.ts
+│
+│
+│ ├── middleware.ts
+│ └── env.d.ts
+│
+├── .env.local
+├── next.config.js
+├── tailwind.config.ts
+├── tsconfig.json
+├── package.json
+└── README.md
+
+1. Project setup
+   Next.js app router structure
+   Tailwind styling
+   Basic layout (navbar, sidebar placeholder)
+2. Authentication (NextAuth or Supabase auth)
+   Google login working
+   Session available everywhere
+   Protect /dashboard
+
+👉 Goal:
+User can log in and be redirected.
+
+3. Database setup (Supabase)
+
+Create tables:
+
+profiles
+events
+registrations
+reviews
+
+👉 Goal:
+You can insert and read data manually.
+
+4. Profile system
+   Create profile on first login
+   Store:
+   id
+   email
+   role (default: attendee)
+   name
+
+👉 Goal:
+Every user exists in profiles.
+
+🧠 Phase 2 — Core feature (EVENTS) 5. Event creation (MOST IMPORTANT FEATURE)
+Create event form
+Server action → Supabase insert
+Basic validation
+Toasts
+
+👉 Goal:
+Organizer can create an event.
+
+6. Events listing page
+   Fetch all events
+   Display cards
+   Basic filtering (optional)
+
+👉 Goal:
+Users can browse events.
+
+7. Event detail page
+   Single event view
+   Show full info
+   “Register” button (later used)
+   🧠 Phase 3 — Roles & dashboards
+8. Role system
+   attendee / organizer / admin
+   protect actions (like create event)
+
+👉 Goal:
+Not everyone can create events.
+
+9. Dashboard layout
+   /dashboard
+   role-based rendering:
+   Organizer dashboard
+   Attendee dashboard
+   Admin dashboard
+10. Sidebar per role
+    Different navigation for each role
+    🧠 Phase 4 — Interactions
+11. Event registration system
+    user joins event
+    store in registrations table
+    prevent duplicate joins
+12. “My events” pages
+    Organizer: events they created
+    Attendee: events they joined
+13. Reviews / ratings
+    user leaves 1–5 stars
+    calculate average rating per event
+    🧠 Phase 5 — Polish (this is what makes it portfolio-ready)
+14. Toast system (you already started this)
+    success / error feedback everywhere
+15. Loading states
+    skeletons for events
+    form loading states
+16. UX improvements
+    empty states (“No events yet”)
+    disable buttons while loading
+    better form validation
+17. Image upload (Supabase Storage)
+    event cover images
+    preview before upload
+    🧠 Phase 6 — Advanced (optional but impressive)
+18. Search & filters
+    category filter
+    location filter
+    date filter
+19. Admin dashboard
+    users list
+    events moderation
+    stats
+20. Analytics (bonus)
+    total events
+    total users
+    most popular events

@@ -356,12 +356,15 @@ export async function deleteEvent(user, event) {
   if (user.role !== "organizer")
     throw new Error("You are not authorized to delete this event");
 
+  if (event.created_by !== user.id)
+    throw new Error("You are not authorized to delete this event");
+
   let { error: errorRegistrations } = await supabase
     .from("registrations")
     .delete()
     .eq("event_id", event.id);
 
-  if (errorRegistrations) throw new Error(errorRegistrations);
+  if (errorRegistrations) throw new Error(errorRegistrations.message);
   // throw new Error("You are not authorized to delete this event");
 
   let { error: errorFavourites } = await supabase
@@ -369,18 +372,35 @@ export async function deleteEvent(user, event) {
     .delete()
     .eq("event_id", event.id);
 
-  if (errorFavourites) throw new Error(errorFavourites);
-  // throw new Error("You are not authorized to delete this event");
+  if (errorFavourites) throw new Error(errorFavourites.message);
 
   let { error: errorReviews } = await supabase
     .from("reviews")
     .delete()
     .eq("event_id", event.id);
 
-  if (errorReviews) throw new Error(errorReviews);
-  // throw new Error("You are not authorized to delete this event");
+  if (errorReviews) throw new Error(errorReviews.message);
+
+  //deleting the activity
+  const { error: activitiesError } = await supabase
+    .from("activities")
+    .delete()
+    .eq("event_id", event.id);
+
+  if (activitiesError) throw new Error(activitiesError.message);
+
+  //deleting the notification
+  const { error: notificationsError } = await supabase
+    .from("notifications")
+    .delete()
+    .eq("event_id", event.id);
+
+  if (notificationsError) throw new Error(notificationsError.message);
+
+  //deleting the event
   const { error } = await supabase.from("events").delete().eq("id", event.id);
-  if (error) throw new Error(error);
+
+  if (error) throw new Error(error.message);
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/events");

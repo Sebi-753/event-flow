@@ -1,19 +1,50 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { updateProfileAction } from "@/lib/actions";
 import { FaCamera } from "react-icons/fa";
+import { supabase } from "@/lib/supabase";
 
 export default function ProfileFormClient({ currentUser }) {
   const router = useRouter();
+
+  const [selectedFile, setSelectedFile] = useState(null);
 
   async function onSubmit(formData) {
     const confirmed = confirm("Are you sure you want to update your profile?");
 
     if (!confirmed) return;
 
-    const result = await updateProfileAction(formData);
+    let avatarUrl = currentUser.avatar;
+
+    if (selectedFile) {
+      const fileName = `public/${Date.now()}-${selectedFile.name}`;
+
+      const { error } = await supabase.storage
+        .from("avatars")
+        .upload(fileName, selectedFile);
+
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      const { data } = supabase.storage.from("avatars").getPublicUrl(fileName);
+
+      avatarUrl = data.publicUrl;
+    }
+
+    // Create a NEW FormData
+    const data = new FormData();
+
+    data.append("fullName", formData.get("fullName"));
+    data.append("bio", formData.get("bio"));
+    data.append("avatar", avatarUrl);
+
+    // Send THIS instead of the original formData
+    const result = await updateProfileAction(data);
 
     if (result.success) {
       toast.success("Profile successfuly updated");
@@ -47,7 +78,13 @@ export default function ProfileFormClient({ currentUser }) {
 
               <span className="text-[var(--text-disabled)]">Upload photo</span>
 
-              <input type="file" name="avatar" className="hidden" />
+              <input
+                type="file"
+                name="avatar"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+              />
             </label>
           </div>
         </div>

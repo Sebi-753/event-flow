@@ -124,59 +124,28 @@ export async function createEventAction(formData) {
 }
 
 export async function updateProfileAction(formData) {
-  // checking if the user is signed in
+  // Check if the user is signed in
   const user = await getCurrentUser();
   if (!user) throw new Error("You are not authenticated");
 
-  //getting the avatar from the form
-  const file = formData.get("avatar");
-
-  let publicUrl = null;
-
-  //checking if there is a file passed into the form
-  if (file && file.size > 0) {
-    //if there is then create a fileName
-    const fileName = `public/${Date.now()}-${file.name}`;
-
-    //adding te file to spabase
-    const { error } = await supabase.storage
-      .from("avatars")
-      .upload(fileName, file);
-
-    //throw an error if there is an error
-    if (error)
-      return {
-        success: false,
-        message: error.message,
-      };
-
-    //getting the url from the supabase storage
-    const { data } = supabase.storage.from("avatars").getPublicUrl(fileName);
-    publicUrl = data?.publicUrl;
-  }
-
-  //getting the rest of the form info
+  // Get the form data
   const fullName = formData.get("fullName");
   const bio = formData.get("bio");
+  const avatar = formData.get("avatar");
 
-  //creating the object that will be passed into supabase for updating the profile
+  // Object that will be updated in Supabase
   const updatedData = {
     fullName,
     bio,
+    avatar,
   };
 
-  //if there is an image add it to the updating object
-  if (publicUrl) {
-    updatedData.avatar = publicUrl;
-  }
-
-  //updating the data in supabase
+  // Update the profile
   const { error } = await updateProfile(updatedData);
 
-  //revalidating the path after each update
+  // Revalidate the profile page
   revalidatePath("/profile");
 
-  //returns for toasts
   if (error) {
     return {
       success: false,

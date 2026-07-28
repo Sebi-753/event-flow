@@ -47,7 +47,7 @@ function SideBarAdmin({ user }) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-50 flex h-screen w-72 flex-col border-r border-gray-200 bg-white transition-transform duration-300 md:static md:w-full md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"} `}
+        className={`fixed top-0 left-0 z-50 flex h-[100dvh] w-72 flex-col border-r border-gray-200 bg-white transition-transform duration-300 md:static md:w-full md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"} `}
       >
         {/* Close button (mobile only) */}
         <button

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { createEventAction } from "@/lib/actions";
+import { useFormStatus } from "react-dom";
 
 export default function CreateEventForm() {
   const [fileName, setFileName] = useState("");
@@ -217,14 +218,24 @@ export default function CreateEventForm() {
         >
           Cancel
         </button>
-
-        <button
-          type="submit"
-          className="rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700"
-        >
-          Publish Event
-        </button>
+        <ButtonSubmit />
       </div>
     </form>
+  );
+}
+function ButtonSubmit() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      type="submit"
+      className={`rounded-xl px-6 py-3 font-semibold transition ${
+        pending
+          ? "cursor-not-allowed bg-gray-300 text-gray-600"
+          : "bg-indigo-600 text-white hover:bg-indigo-700"
+      }`}
+    >
+      {pending ? "Creating event" : "Publish Event"}
+    </button>
   );
 }
